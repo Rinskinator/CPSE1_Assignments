@@ -1,0 +1,29 @@
+g++ -std=c++17
+
+gcc := g++
+ln := g++
+rm := rm -f
+
+.PHONY: build clean melody.cpp
+
+build: generator.exe 
+
+melody.cpp : generator.exe
+	./generator.exe
+
+clean :
+	$(rm) generator.exe generator.o rtttl_player.o note_player_print.o
+
+generator.exe : generator.o rtttl_player.o note_player_print.o
+	$(ln) generator.o rtttl_player.o note_player_print.o -o generator.exe
+
+generator.o : generator.cpp 
+	$(gcc) -c generator.cpp -o generator.o
+
+rtttl_player.o : rtttl_player.cpp rtttl_player.hpp
+	$(gcc) -c rtttl_player.cpp -o rtttl_player.o
+
+note_player_print.o : note_player_print.cpp note_player_print.hpp
+	$(gcc) -c note_player_print.cpp -o note_player_print.o
+
+
